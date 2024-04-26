@@ -1,5 +1,12 @@
+// HTML Selector Variables
+
 const themeSwitcher = document.getElementById("theme-switcher");
 const root = document.documentElement;
+const currentTheme = localStorage.getItem("theme");
+const nav = document.getElementsByTagName("nav")[0];
+const navIcon = document.getElementsByClassName("menu-icon")[0];
+
+//Functions
 
 const switchTheme = () => {
   const dataTheme = root.getAttribute("data-theme");
@@ -12,11 +19,21 @@ const switchTheme = () => {
   }
 };
 
+const activeNav = () => {
+  if (nav.style.transform === "translateX(-100%)") {
+    nav.style.transform = "";
+  } else {
+    nav.style.transform = "translateX(-100%)";
+  }
+};
+
+//Event Listeners
+
 themeSwitcher.addEventListener("click", switchTheme);
+navIcon.addEventListener("click", activeNav);
 
 // Check Local Storage For Theme
 
-const currentTheme = localStorage.getItem("theme");
 if (currentTheme) {
   document.documentElement.setAttribute("data-theme", currentTheme);
   if (currentTheme === "dark") {
@@ -25,3 +42,5 @@ if (currentTheme) {
     root.setAttribute("data-theme", "");
   }
 }
+
+nav.style.transform = "translateX(-100%)";
