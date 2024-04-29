@@ -61,7 +61,7 @@ a:hover {
 /* Nav */
 
 nav {
-  height: 90vh;
+  height: 0vh;
   /* transform: translateX(-100%); */
   transition: transform 0.3s ease-in-out;
   width: 100%;
@@ -73,7 +73,7 @@ nav ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 85%;
+  height: 0px;
   font-size: 2rem;
 }
 
