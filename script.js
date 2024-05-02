@@ -1,57 +1,59 @@
-// HTML Selector Variables
-
+// Dark Mode
 const themeSwitcher = document.getElementById("theme-switcher");
-const root = document.documentElement;
-const currentTheme = localStorage.getItem("theme");
-const nav = document.getElementsByTagName("nav")[0];
-const navIcon = document.getElementsByClassName("menu-icon")[0];
-const navItems = document.getElementsByClassName("menu-items")[0];
 
-
-
-//Functions
-
-const switchTheme = () => {
-  const dataTheme = root.getAttribute("data-theme");
-  if (dataTheme === null || dataTheme === "") {
-    root.setAttribute("data-theme", "dark");
-    localStorage.setItem("theme", "dark");
-  } else {
-    root.setAttribute("data-theme", "");
-    localStorage.setItem("theme", "light");
-  }
-};
-
-const activeNav = () => {
-  if (nav.style.transform === "translateX(-100%)") {
-    nav.style.height="85vh";   
-    nav.style.transform = "";
-  } else {
-    nav.style.transform = "translateX(-100%)";
-    navItems.style.height = "0px";
-    nav.style.height = "0px";
-  }
-};
-
-//Event Listeners
-
-themeSwitcher.addEventListener("click", switchTheme);
-navIcon.addEventListener("click", activeNav);
-nav.addEventListener("click", activeNav)
-
-for (let i = 0; i < navIcon; i++) {
-  console.log(navIcon[i]);
+// Dark Mode Styles
+function darkMode() {
+  themeSwitcher.children[0].textContent = "Dark Mode";
+  themeSwitcher.children[1].classList.replace("fa-sun", "fa-moon");
 }
+
+// Light Mode Styles
+function lightMode() {
+  themeSwitcher.children[0].textContent = "Light Mode";
+  themeSwitcher.children[1].classList.replace("fa-moon", "fa-sun");
+}
+
+// Switch Theme
+function switchTheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  if (!currentTheme || currentTheme === "light") {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+    darkMode();
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
+    lightMode();
+  }
+}
+
+// Event Listener
+themeSwitcher.addEventListener("click", switchTheme);
 
 // Check Local Storage For Theme
-
-if (currentTheme) {
-  document.documentElement.setAttribute("data-theme", currentTheme);
-  if (currentTheme === "dark") {
-    root.setAttribute("data-theme", "dark");
+const currentThemeFromLocalStorage = localStorage.getItem("theme");
+if (currentThemeFromLocalStorage) {
+  document.documentElement.setAttribute(
+    "data-theme",
+    currentThemeFromLocalStorage
+  );
+  if (currentThemeFromLocalStorage === "dark") {
+    darkMode();
   } else {
-    root.setAttribute("data-theme", "");
+    lightMode();
   }
 }
 
-nav.style.transform = "translateX(-100%)";
+// Navigation
+const nav = document.getElementById("nav");
+const menuIcon = document.querySelector(".menu-icon");
+
+function toggleMenu() {
+  nav.classList.toggle("active");
+  menuIcon.classList.toggle("active");
+}
+
+function hideMenu() {
+  nav.classList.remove("active");
+  menuIcon.classList.remove("active");
+}
